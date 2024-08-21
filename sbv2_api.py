@@ -18,7 +18,7 @@ import time
 import glob
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
-update_user_dict = True
+update_user_dict = False
 default_dict_path = "dict_data/default.csv"
 compiled_dict_path = "dict_data/user.dic"
 bert_models_model = "ku-nlp/deberta-v2-large-japanese-char-wwm"
