@@ -42,6 +42,9 @@ class SBV2:
         bert_models.load_model(Languages.JP, bert_models_model)
         bert_models.load_tokenizer(Languages.JP, bert_models_tokenizer)
 
+        print(f"### model_path:{model_path}")
+        print(f"### {glob.glob(f'{model_path}/*.npy',recursive=True)=}")
+    
         style_file = glob.glob(f'{model_path}/*.npy',recursive=True)[0]
         config_file = glob.glob(f'{model_path}/*.json',recursive=True)[0]
         model_file = glob.glob(f'{model_path}/*.safetensors',recursive=True)[0]
@@ -81,7 +84,8 @@ user_instances: Dict[str, Dict] = {}
 
 class Dependencies:
     def __init__(self,api_key, model):
-        model_path = f"model_assets/{model}"
+        #model_path = f"model_assets/{model}"
+        model_path = f"/home/ubuntu/work/Style-Bert-VITS2/model_assets/{model}"
         self.sbv2 = SBV2(model_path = model_path)
 
     def get_sbv2(self):   
@@ -124,8 +128,12 @@ async def process_data(
     start_tts = time.time()
     sr, audio = dependencies.get_sbv2().call_TTS(inputs.text)
     print(f"Time taken for TTS: {time.time() - start_tts}")
+    print(f"DEBUG:  {type(audio)=} ")
+    print(f"DEBUG:  {audio[0:10]=} ")
+    
     return {"audio": audio.tolist(), "sr": sr}
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8001)
+    #uvicorn.run(app, host="127.0.0.1", port=8001)
+    uvicorn.run(app, host="0.0.0.0", port=8001)
