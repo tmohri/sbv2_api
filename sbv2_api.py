@@ -66,10 +66,10 @@ class SBV2:
 
         return sr, audio
     
-    def text2speech(self,message):
-        sr, audio = self.model_TTS.infer(text=message)
-        sd.play(audio, sr)
-        sd.wait()
+    # def text2speech(self,message):
+    #     sr, audio = self.model_TTS.infer(text=message)
+    #     #sd.play(audio, sr)
+    #     #sd.wait()
 
 app = FastAPI()
 
@@ -128,8 +128,8 @@ async def process_data(
     start_tts = time.time()
     sr, audio = dependencies.get_sbv2().call_TTS(inputs.text)
     print(f"Time taken for TTS: {time.time() - start_tts}")
-    print(f"DEBUG:  {type(audio)=} ")
-    print(f"DEBUG:  {audio[0:10]=} ")
+    #print(f"DEBUG:  {type(audio)=} ")
+    #print(f"DEBUG:  {audio[0:10]=} ")
     
     return {"audio": audio.tolist(), "sr": sr}
 
